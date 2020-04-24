@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LocationSeeder::class);
         $this->call(News::class);
         $this->call(Tour::class);
+        $this->call(BloodTableSeeder::class);
     }
 }
  

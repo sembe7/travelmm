@@ -24,6 +24,9 @@ class CreateUsersTable extends Migration
             $table->string('address',255)->nullable();
             $table->string('address2',255)->nullable();
             $table->string('phone',30)->nullable();
+            // add column
+            $table->string('phone2',30)->nullable();
+            //end cilumn
             $table->date('birthday')->nullable();
             $table->string('city',255)->nullable();
             $table->string('state',255)->nullable();
@@ -33,6 +36,17 @@ class CreateUsersTable extends Migration
             $table->bigInteger('avatar_id')->nullable();
             $table->text('bio')->nullable();
             $table->string('status',20)->nullable();
+            // add column
+            $table->integer('blood_type')->nullable();
+            $table->string('Foreign_FirstName')->nullable();
+            $table->string('Foreign_LastName')->nullable();
+            $table->string('Foreign_Registration')->nullable();
+            $table->string('Registration')->nullable();
+            $table->date('Foreign_StartDate')->nullable();
+            $table->date('Foreign_EndDate')->nullable();
+            $table->string('Registration_image')->nullable();
+            $table->string('Foreign_Registration_image')->nullable();
+            // end column
             $table->integer('create_user')->nullable();
             $table->integer('update_user')->nullable();
             $table->softDeletes();

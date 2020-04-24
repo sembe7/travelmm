@@ -48,6 +48,12 @@ class CreateBravoTours extends Migration
             $table->bigInteger('update_user')->nullable();
             $table->softDeletes();
             
+            //add info
+            $table->date('tourStart')->nullable();
+            $table->date('tourEnd')->nullable();
+            $table->string('country',50)->nullable();
+            $table->string('Destination',255)->nullable();
+
             //Languages
             $table->bigInteger('origin_id')->nullable();
             $table->string('lang',10)->nullable();

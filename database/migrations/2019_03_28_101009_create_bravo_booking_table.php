@@ -50,7 +50,13 @@ class CreateBravoBookingTable extends Migration
             $table->string('zip_code',255)->nullable();
             $table->string('country',255)->nullable();
             $table->text('customer_notes')->nullable();
-
+            //add column
+            $table->string('Foreign_Registration');
+            $table->string('Registration');
+            $table->date('Foreign_Start_Date');
+            $table->date('Foreign_End_Date');
+            $table->string('Foreign_First_Name');
+            $table->string('Foreign_Last_Name');
 
             $table->integer('create_user')->nullable();
             $table->integer('update_user')->nullable();
