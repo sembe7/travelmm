@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="form-content">
-                <div class="form-group form-date-field form-date-search clearfix " data-format="{{get_moment_date_format()}}">
+                {{-- <div class="form-group form-date-field form-date-search clearfix " data-format="{{get_moment_date_format()}}">
                     <div class="date-wrapper clearfix" @click="openStartDate">
                         <div class="check-in-wrapper">
                             <label>{{__("Start Date")}}</label>
@@ -27,6 +27,15 @@
                         <i class="fa fa-angle-down arrow"></i>
                     </div>
                     <input type="text" class="start_date" ref="start_date" style="height: 1px; visibility: hidden">
+                </div> --}}
+                <div class="form-group form-date-field form-date-search clearfix " >
+                    <div class="date-wrapper clearfix">
+                        <div class="check-in-wrapper">
+                            <label>{{__("Start Date")}}</label>
+                            <div class="render check-in-render">{{$row->tourStart}}</div>
+                        </div>
+                    </div>
+                    <input type="text" class="start_date" value="" ref="start_date" style="height: 1px; visibility: hidden">
                 </div>
                 <div class="" v-if="person_types">
                     <div class="form-group form-guest-search" v-for="(type,index) in person_types">
@@ -75,7 +84,6 @@
                     </div>
                 </div>
             </div>
-
             <div v-html="html"></div>
             <div class="submit-group">
                 <a class="btn btn-large" @click="doSubmit($event)" :class="{'disabled':onSubmit,'btn-success':(step == 2),'btn-primary':step == 1}" name="submit">

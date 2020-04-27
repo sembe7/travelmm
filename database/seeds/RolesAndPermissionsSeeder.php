@@ -141,5 +141,9 @@ class RolesAndPermissionsSeeder extends Seeder
         $vendor->givePermissionTo('tour_update');
         $vendor->givePermissionTo('tour_delete');
         $vendor->givePermissionTo('dashboard_vendor_access');
+        if($vendor->givePermissionTo('user_delete')){
+            error(404);
+        }
+        
     }
 }

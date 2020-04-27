@@ -18,6 +18,13 @@ class BookingController extends \App\Http\Controllers\Controller
         //        $this->middleware('auth');
     }
 
+    function parent_api_id($id){
+        $childs = User::with('children')
+            ->where( 'id', $id)
+            ->get();
+        return response()->json($childs);
+    }
+
     public function checkout($code)
     {
 
@@ -115,7 +122,11 @@ class BookingController extends \App\Http\Controllers\Controller
             'email'           => 'required|string|email|max:255',
             'phone'           => 'required|string|max:255',
             'payment_gateway' => 'required',
-            'term_conditions' => 'required'
+            'term_conditions' => 'required',
+            'Foreign_Registration'=> 'required|string|min:8',
+            'Registration'=> 'required|string|min:10',
+            'Foreign_Start_Date'=>'required',
+            'Foreign_End_Date'=>'required',
         ];
         $rules = $service->filterCheckoutValidate($request, $rules);
         if (!empty($rules)) {
@@ -149,17 +160,34 @@ class BookingController extends \App\Http\Controllers\Controller
         $booking->country = $request->input('country');
         $booking->customer_notes = $request->input('customer_notes');
         $booking->gateway = $payment_gateway;
+
+        $booking->Foreign_FirstName = $request->input('Foreign_FirstName');
+        $booking->Foreign_LastName = $request->input('Foreign_LastName');
+        $booking->Foreign_Registration = $request->input('Foreign_Registration');
+        $booking->Registration = $request->input('Registration');
+        $booking->Foreign_Start_Date = $request->input('Foreign_Start_Date');
+        $booking->Foreign_End_Date = $request->input('Foreign_End_Date');
         $booking->save();
+
         $user = Auth::user();
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->phone = $request->input('phone');
+        $user->phone = $request->input('phone2');
         $user->address = $request->input('address_line_1');
         $user->address2 = $request->input('address_line_2');
         $user->city = $request->input('city');
         $user->state = $request->input('state');
         $user->zip_code = $request->input('zip_code');
         $user->country = $request->input('country');
+
+        $user->Foreign_FirstName = $request->input('Foreign_FirstName');
+        $user->Foreign_LastName = $request->input('Foreign_LastName');
+        $user->Foreign_Registration = $request->input('Foreign_Registration');
+        $user->Registration = $request->input('Registration');
+        $user->Foreign_Start_Date = $request->input('Foreign_Start_Date');
+        $user->Foreign_End_Date = $request->input('Foreign_End_Date');
+        
         $user->save();
         $service->afterCheckout($request, $booking);
         try {

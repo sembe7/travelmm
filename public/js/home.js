@@ -1,15 +1,15 @@
-jQuery(function ($) {
+jQuery(function($) {
 
-    function parseErrorMessage(e){
+    function parseErrorMessage(e) {
         var html = '';
-        if(e.responseJSON){
-            if(e.responseJSON.errors){
+        if (e.responseJSON) {
+            if (e.responseJSON.errors) {
                 return Object.values(e.responseJSON.errors).join('<br>');
             }
         }
         return html;
     }
-    $(".bravo-list-tour").each(function () {
+    $(".bravo-list-tour").each(function() {
         $(this).find(".owl-carousel").owlCarousel({
             items: 4,
             loop: false,
@@ -29,7 +29,7 @@ jQuery(function ($) {
         })
     });
 
-    $(".bravo_fullHeight").each(function () {
+    $(".bravo_fullHeight").each(function() {
         var height = $(document).height();
         if ($(document).find(".bravo-admin-bar").length > 0) {
             height = height - $(".bravo-admin-bar").height();
@@ -39,7 +39,7 @@ jQuery(function ($) {
 
 
     // Date Picker Range
-    $('.form-date-search').each(function () {
+    $('.form-date-search').each(function() {
         var parent = $(this),
             date_wrapper = $('.date-wrapper', parent),
             check_in_input = $('.check-in-input', parent),
@@ -56,11 +56,11 @@ jQuery(function ($) {
             widthSingle: 300,
             onlyShowCurrentMonth: true,
         };
-        if (typeof  locale_daterangepicker == 'object') {
+        if (typeof locale_daterangepicker == 'object') {
             options.locale = locale_daterangepicker;
         }
         check_in_out.daterangepicker(options,
-            function (start, end, label) {
+            function(start, end, label) {
                 check_in_input.val(start.format(parent.data('format')));
                 check_in_render.html(start.format(parent.data('format')));
                 check_out_input.val(end.format(parent.data('format')));
@@ -71,13 +71,13 @@ jQuery(function ($) {
                     $('.check-in-wrapper span', parent).show();
                 }
             });
-        date_wrapper.click(function (e) {
+        date_wrapper.click(function(e) {
             check_in_out.trigger('click');
         });
     });
 
     // Date Picker
-    $('.date-picker').each(function () {
+    $('.date-picker').each(function() {
         $(this).daterangepicker({
             "singleDatePicker": true,
             locale: {
@@ -90,12 +90,12 @@ jQuery(function ($) {
 
 
     //Review
-    $('.review-form .review-items .rates .fa').each(function () {
+    $('.review-form .review-items .rates .fa').each(function() {
         var list = $(this).parent(),
             listItems = list.children(),
             itemIndex = $(this).index(),
             parentItem = list.parent();
-        $(this).hover(function () {
+        $(this).hover(function() {
             for (var i = 0; i < listItems.length; i++) {
                 if (i <= itemIndex) {
                     $(listItems[i]).addClass('hovered');
@@ -103,7 +103,7 @@ jQuery(function ($) {
                     break;
                 }
             }
-            $(this).click(function () {
+            $(this).click(function() {
                 for (var i = 0; i < listItems.length; i++) {
                     if (i <= itemIndex) {
                         $(listItems[i]).addClass('selected');
@@ -113,14 +113,14 @@ jQuery(function ($) {
                 }
                 parentItem.children('.review_stats').val(itemIndex + 1);
             });
-        }, function () {
+        }, function() {
             listItems.removeClass('hovered');
         });
     });
 
 
     //Login
-    $('.bravo-form-login [type=submit]').click(function (e) {
+    $('.bravo-form-login [type=submit]').click(function(e) {
         e.preventDefault();
         let form = $(this).closest('.bravo-form-login');
         $.ajaxSetup({
@@ -129,7 +129,7 @@ jQuery(function ($) {
             }
         });
         $.ajax({
-            'url': bookingCore.url+'/login',
+            'url': bookingCore.url + '/login',
             'data': {
                 'email': form.find('input[name=email]').val(),
                 'password': form.find('input[name=password]').val(),
@@ -137,17 +137,17 @@ jQuery(function ($) {
                 'g-recaptcha-response': form.find('[name=g-recaptcha-response]').val(),
             },
             'type': 'POST',
-            beforeSend: function () {
+            beforeSend: function() {
                 form.find('.error').hide();
                 form.find('.icon-loading').css("display", 'inline-block');
             },
-            success: function (data) {
+            success: function(data) {
                 form.find('.icon-loading').hide();
                 if (data.error === true) {
                     if (data.messages !== undefined) {
-                        for(var item in data.messages) {
+                        for (var item in data.messages) {
                             var msg = data.messages[item];
-                            form.find('.error-'+item).show().text(msg[0]);
+                            form.find('.error-' + item).show().text(msg[0]);
                         }
                     }
                     if (data.messages.message_error !== undefined) {
@@ -160,7 +160,7 @@ jQuery(function ($) {
             }
         });
     })
-    $('.bravo-form-register [type=submit]').click(function (e) {
+    $('.bravo-form-register [type=submit]').click(function(e) {
         e.preventDefault();
         let form = $(this).closest('.bravo-form-register');
         $.ajaxSetup({
@@ -169,7 +169,7 @@ jQuery(function ($) {
             }
         });
         $.ajax({
-            'url': bookingCore.url+'/register',
+            'url': bookingCore.url + '/register',
             'data': {
                 'email': form.find('input[name=email]').val(),
                 'password': form.find('input[name=password]').val(),
@@ -179,17 +179,17 @@ jQuery(function ($) {
                 'g-recaptcha-response': form.find('[name=g-recaptcha-response]').val(),
             },
             'type': 'POST',
-            beforeSend: function () {
+            beforeSend: function() {
                 form.find('.error').hide();
                 form.find('.icon-loading').css("display", 'inline-block');
             },
-            success: function (data) {
+            success: function(data) {
                 form.find('.icon-loading').hide();
                 if (data.error === true) {
                     if (data.messages !== undefined) {
-                        for(var item in data.messages) {
+                        for (var item in data.messages) {
                             var msg = data.messages[item];
-                            form.find('.error-'+item).show().text(msg[0]);
+                            form.find('.error-' + item).show().text(msg[0]);
                         }
                     }
                     if (data.messages.message_error !== undefined) {
@@ -200,25 +200,86 @@ jQuery(function ($) {
                     window.location.href = data.redirect
                 }
             },
-            error:function (e) {
-				form.find('.icon-loading').hide();
-				if(typeof e.responseJSON !== "undefined" && typeof e.responseJSON.message !='undefined'){
-					form.find('.message-error').show().html('<div class="alert alert-danger">' + e.responseJSON.message + '</div>');
+            error: function(e) {
+                form.find('.icon-loading').hide();
+                if (typeof e.responseJSON !== "undefined" && typeof e.responseJSON.message != 'undefined') {
+                    form.find('.message-error').show().html('<div class="alert alert-danger">' + e.responseJSON.message + '</div>');
                 }
-			}
+            }
         });
     })
-    $('#register').on('show.bs.modal', function (event) {
+
+    $('.bravo-add-form-register [type=submit]').click(function(e) {
+        e.preventDefault();
+        let form = $(this).closest('.bravo-add-form-register');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': form.find('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            'url': bookingCore.url + '/registers',
+            'data': {
+                'code': form.find('input[name=code]').val(),
+                'email': form.find('input[name=email]').val(),
+                'password': form.find('input[name=password]').val(),
+                'first_name': form.find('input[name=first_name]').val(),
+                'last_name': form.find('input[name=last_name]').val(),
+                'Foreign_FirstName': form.find('input[name=Foreign_FirstName]').val(),
+                'Foreign_LastName': form.find('input[name=Foreign_LastName]').val(),
+                'Foreign_Registration': form.find('input[name=Foreign_Registration]').val(),
+                'Registration': form.find('input[name=Registration]').val(),
+                'Foreign_Start_Date': form.find('input[name=Foreign_Start_Date]').val(),
+                'Foreign_End_Date': form.find('input[name=Foreign_End_Date]').val(),
+                'parent_id': form.find('input[name=parent_id]').val(),
+                'term': form.find('input[name=term]').is(":checked") ? 1 : '',
+                'g-recaptcha-response': form.find('[name=g-recaptcha-response]').val(),
+            },
+            'type': 'POST',
+            beforeSend: function() {
+                form.find('.error').hide();
+                form.find('.icon-loading').css("display", 'inline-block');
+            },
+            success: function(data) {
+                console.log(data);
+                $('#success_mode').html('Амжилттай ');
+                alert('success');
+                form.find('.icon-loading').hide();
+                if (data.error === true) {
+                    if (data.messages !== undefined) {
+                        for (var item in data.messages) {
+                            var msg = data.messages[item];
+                            form.find('.error-' + item).show().text(msg[0]);
+                        }
+                    }
+                    if (data.messages.message_error !== undefined) {
+                        form.find('.message-error').show().html('<div class="alert alert-danger">' + data.messages.message_error[0] + '</div>');
+                    }
+                }
+                if (data.redirect !== undefined) {
+                    window.location.href = data.redirect
+                }
+            },
+            error: function(e) {
+                form.find('.icon-loading').hide();
+                if (typeof e.responseJSON !== "undefined" && typeof e.responseJSON.message != 'undefined') {
+                    form.find('.message-error').show().html('<div class="alert alert-danger">' + e.responseJSON.message + '</div>');
+                }
+            }
+        });
+    });
+
+    $('#register').on('show.bs.modal', function(event) {
         $('#login').modal('hide')
     })
-    $('#login').on('show.bs.modal', function (event) {
+    $('#login').on('show.bs.modal', function(event) {
         $('#register').modal('hide')
     });
 
 
     var onSubmitSubscribe = false;
     //Subscribe box
-    $('.bravo-subscribe-form').submit(function (e) {
+    $('.bravo-subscribe-form').submit(function(e) {
         e.preventDefault();
 
         if (onSubmitSubscribe) return;
@@ -232,7 +293,7 @@ jQuery(function ($) {
             type: 'post',
             data: $(this).serialize(),
             dataType: 'json',
-            success: function (json) {
+            success: function(json) {
                 onSubmitSubscribe = false;
                 me.removeClass('loading');
 
@@ -245,14 +306,14 @@ jQuery(function ($) {
                 }
 
             },
-            error: function (e) {
+            error: function(e) {
                 console.log(e);
                 onSubmitSubscribe = false;
                 me.removeClass('loading');
 
-                if(parseErrorMessage(e)){
+                if (parseErrorMessage(e)) {
                     me.find('.form-mess').html('<span class="text-danger">' + parseErrorMessage(e) + '</span>');
-                }else
+                } else
                 if (e.responseText) {
                     me.find('.form-mess').html('<span class="text-danger">' + e.responseText + '</span>');
                 }
@@ -265,41 +326,41 @@ jQuery(function ($) {
 
 
     //Menu
-    $(".bravo-more-menu").click(function () {
+    $(".bravo-more-menu").click(function() {
         $(this).trigger('bravo-trigger-menu-mobile');
     });
-    $(".bravo-menu-mobile .b-close").click(function () {
+    $(".bravo-menu-mobile .b-close").click(function() {
         $(".bravo-more-menu").trigger('bravo-trigger-menu-mobile');
     });
-    $(document).on("click",".bravo-effect-bg",function () {
+    $(document).on("click", ".bravo-effect-bg", function() {
         $(".bravo-more-menu").trigger('bravo-trigger-menu-mobile');
     })
-    $(document).on("bravo-trigger-menu-mobile",".bravo-more-menu",function () {
+    $(document).on("bravo-trigger-menu-mobile", ".bravo-more-menu", function() {
         $(this).toggleClass('active');
-        if($(this).hasClass('active')){
+        if ($(this).hasClass('active')) {
             $(".bravo-menu-mobile").addClass("active");
-            $('body').css('overflow','hidden').append("<div class='bravo-effect-bg'></div>");
-        }else{
+            $('body').css('overflow', 'hidden').append("<div class='bravo-effect-bg'></div>");
+        } else {
             $(".bravo-menu-mobile").removeClass("active");
-            $("body").css('overflow','initial').find(".bravo-effect-bg").remove();
+            $("body").css('overflow', 'initial').find(".bravo-effect-bg").remove();
         }
     });
-    $(".bravo-menu-mobile .g-menu ul li .fa").click(function (e) {
+    $(".bravo-menu-mobile .g-menu ul li .fa").click(function(e) {
         e.preventDefault();
         $(this).closest('li').toggleClass('active');
     });
-    $(".bravo-menu-mobile").each(function () {
+    $(".bravo-menu-mobile").each(function() {
         var h_profile = $(this).find(".user-profile").height();
         var h1_main = $(window).height();
         $(this).find(".g-menu").css("max-height", h1_main - h_profile - 15);
     });
 
-    $(".bravo-more-menu-user").click(function () {
+    $(".bravo-more-menu-user").click(function() {
         $(".bravo_user_profile > .container-fluid > .row > .col-md-3").addClass("active");
-        $("body").css('overflow','hidden').append("<div class='bravo-effect-user-bg'></div>");
+        $("body").css('overflow', 'hidden').append("<div class='bravo-effect-user-bg'></div>");
     });
-    $(document).on("click",".bravo-effect-user-bg,.bravo-close-menu-user",function () {
+    $(document).on("click", ".bravo-effect-user-bg,.bravo-close-menu-user", function() {
         $(".bravo_user_profile > .container-fluid > .row > .col-md-3").removeClass("active");
-        $('body').css('overflow','initial').find(".bravo-effect-user-bg").remove();
+        $('body').css('overflow', 'initial').find(".bravo-effect-user-bg").remove();
     })
 });

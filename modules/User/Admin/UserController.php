@@ -222,9 +222,18 @@ class UserController extends AdminController
             return redirect()->back()->with('error', __('Select at leas 1 item!'));
         if (empty($action))
             return redirect()->back()->with('error', __('Select an Action!'));
+        $row = User::find($ids);
+        if (empty($row)) {
+            return redirect('admin/module/user');
+        }
+        
         if ($action == 'delete') {
             foreach ($ids as $id) {
-                User::where("id", $id)->first()->delete();
+                if ($id == Auth::user()->id and Auth::user()->hasPermissionTo('user_delete')) {
+                    abort(403);
+                }else{
+                    User::where("id", $id)->first()->delete();
+                }
             }
         } else {
             foreach ($ids as $id) {

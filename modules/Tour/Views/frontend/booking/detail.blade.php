@@ -24,7 +24,7 @@
                     <li>
                         <div class="label">{{__('Start date:')}}</div>
                         <div class="val">
-                            {{display_date($booking->start_date)}}
+                            {{display_date($booking->tourStart)}}
                         </div>
                     </li>
                     <li>

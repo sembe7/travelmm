@@ -42,7 +42,7 @@
             <input type="text" name="video" class="form-control" value="{{$row->video}}" placeholder="{{__("Youtube link video")}}">
         </div>
         <div class="form-group">
-            <label class="control-label">{{__("Duration")}}</label>
+            <label class="control-label">{{__("Duration")}} {{__("/hours/")}}</label>
             <input type="text" name="duration" class="form-control" value="{{$row->duration}}" placeholder="{{__("Duration")}}">
         </div>
         <div class="row">
@@ -56,6 +56,34 @@
                 <div class="form-group">
                     <label class="control-label">{{__("Tour Max People")}}</label>
                     <input type="text" name="max_people" class="form-control" value="{{$row->max_people}}" placeholder="{{__("Tour Max People")}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label">{{__("Tour start date")}}</label>
+                    <input type="date" name="tourStart" class="form-control" value="{{$row->tourStart}}" placeholder="{{__("Tour start date")}}">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label">{{__("Tour end date")}}</label>
+                    <input type="date" name="tourEnd" class="form-control" value="{{$row->tourEnd}}" placeholder="{{__("Tour end date")}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label">{{__("Country")}}</label>
+                    <input type="text" name="country" class="form-control" value="{{$row->country}}" placeholder="{{__("Country")}}">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label">{{__("Destiniton")}}</label>
+                    <input type="text" name="Destiniton" class="form-control" value="{{$row->Destiniton}}" placeholder="{{__("Destiniton")}}">
                 </div>
             </div>
         </div>
@@ -117,6 +145,66 @@
             <label class="control-label">{{__("Gallery")}}</label>
             {!! \Modules\Media\Helpers\FileHelper::fieldGalleryUpload('gallery',$row->gallery) !!}
         </div>
-
+        <div class="form-group-item">
+            <label class="control-label">{{__('Аяллын мэдээлэл өдрөөр')}}</label>
+            <div class="g-items-header">
+                <div class="row">
+                    <div class="col-md-3">{{__("Өдөр")}}</div>
+                    <div class="col-md-4">{{__('Тодорхойлолт')}}</div>
+                    <div class="col-md-2">{{__('Зочид буудал')}}</div>
+                    <div class="col-md-2">{{__('Хоол')}}</div>
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
+            <div class="g-items">
+                @if(!empty($row->days))
+                    @foreach($row->days as $key=>$day)
+                        <div class="item" data-number="{{$key}}">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input type="text" name="days[{{$key}}][day]" class="form-control" value="{{$day['day']}}" placeholder="Аяллын тэмдэглэл">
+                                </div>
+                                <div class="col-md-4">
+                                    <textarea name="days[{{$key}}][description]" class="form-control" placeholder="...">{{$day['description']}}</textarea>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" name="days[{{$key}}][hotel]" class="form-control" value="{{$day['hotel']}}" placeholder="{{__('Аяллын тэмдэглэл')}}">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" name="days[{{$key}}][food]" class="form-control" value="{{$day['food']}}" placeholder="{{__('Аяллын тэмдэглэл')}}">
+                                </div>
+                                <div class="col-md-1">
+                                    <span class="btn btn-danger btn-sm btn-remove-item"><i class="fa fa-trash"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+            <div class="text-right">
+                <span class="btn btn-info btn-sm btn-add-item"><i class="icon ion-ios-add-circle-outline"></i> {{__('Add item')}}</span>
+            </div>
+            <div class="g-more hide">
+                <div class="item" data-number="__number__">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="text" __name__="days[__number__][day]" class="form-control" placeholder="{{__(' Аяллын тэмдэглэл')}}">
+                        </div>
+                        <div class="col-md-4">
+                            <textarea __name__="days[__number__][description]" class="form-control" placeholder="..."></textarea>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" __name__="days[__number__][hotel]" class="form-control" placeholder="{{__('Зочид буудал')}}">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" __name__="days[__number__][food]" class="form-control" placeholder="{{__('')}}">
+                        </div>
+                        <div class="col-md-1">
+                            <span class="btn btn-danger btn-sm btn-remove-item"><i class="fa fa-trash"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

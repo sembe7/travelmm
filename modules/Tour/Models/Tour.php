@@ -47,6 +47,11 @@ class Tour extends Bookable
         'min_people',
         //Extra Info
         'faqs',
+
+        'days',
+        'tourStart',
+        'tourEnd',
+
         'status',
         'publish_date',
         'create_user',
@@ -61,6 +66,7 @@ class Tour extends Bookable
      */
     protected $casts = [
         'faqs'  => 'array',
+        'days'  => 'array',
     ];
 
     public static function getModelName()
@@ -384,7 +390,7 @@ class Tour extends Bookable
         $meta = $this->meta;
         $rules = [
             'guests'     => 'required|integer|min:1',
-            'start_date' => 'required|date_format:Y-m-d'
+            //'start_date' => 'required|date_format:Y-m-d'
         ];
         $start_date = $request->input('start_date');
         if ($meta) {

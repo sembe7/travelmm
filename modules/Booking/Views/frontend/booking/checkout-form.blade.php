@@ -1,3 +1,4 @@
+
 <div class="form-checkout" id="form-checkout" >
     <input type="hidden" name="code" value="{{$booking->code}}">
     <div class="form-section">
@@ -67,6 +68,134 @@
                     </select>
                 </div>
             </div>
+            {{-- END Example --}}
+            <div class="col-md-12">
+                <div class="form-group">
+                    <hr style="border-top: 1px solid red">
+                </div>
+            </div>
+            <div class="col-md-6 field-Foreign_FirstName">
+                <div class="form-group"> 
+                    <label >{{__("Гадаад паспортын нэр /Англиар/")}} <span class="required">*</span></label>
+                    <input type="text" class="form-control" required="" value="{{$user->Foreign_FirstName ?? ''}}" name="Foreign_FirstName" placeholder="{{__("Гадаад паспортын нэр /Англиар/")}}">
+                </div>
+            </div>
+            <div class="col-md-6 field-Foreign_LastName">
+                <div class="form-group">
+                    <label >{{__("Гадаад паспортын овог /Англиар/")}} <span class="required">*</span> </label>
+                    <input type="text" class="form-control" value="{{$user->Foreign_LastName ?? ''}}" name="Foreign_LastName" placeholder="{{__("Гадаад паспортын овог /Англиар/")}}">
+                </div>
+            </div>
+            <div class="col-md-6 field-Foreign_Registration">
+                <div class="form-group"> 
+                    <label >{{__("Гадаад паспортын дугаар")}} <span class="required">*</span></label>
+                    <input type="text" class="form-control" required="" value="{{$user->Foreign_Registration ?? ''}}" name="Foreign_Registration" placeholder="{{__("Гадаад паспортын дугаар")}}">
+                </div>
+            </div>
+            <div class="col-md-6 field-travel-destination">
+                <div class="form-group">
+                    <label >{{__("Регистрийн дугаар")}} <span class="required">*</span> </label>
+                    <input type="text" class="form-control" value="{{$user->Registration ?? ''}}" name="Registration" placeholder="{{__("Регистрийн дугаар")}}">
+                </div>
+            </div>
+            
+            <div class="col-md-6 field-travel-country">
+                <div class="form-group">
+                    <label >{{__("Гадаад паспорт олгосон өдөр")}} <span class="required">*</span> </label>
+                    <input type="date" class="form-control" value="{{$user->Foreign_Start_Date ?? ''}}" name="Foreign_Start_Date" placeholder="{{__("Гадаад паспортын олгосон өдөр")}}">
+                </div>
+            </div>
+            <div class="col-md-6 field-travel-destination">
+                <div class="form-group">
+                    <label >{{__("Гадаад паспортын дуусах хугацаа")}} <span class="required">*</span> </label>
+                    <input type="date" class="form-control" value="{{$user->Foreign_End_Date ?? ''}}" name="Foreign_End_Date" placeholder="{{__("Гадаад паспортын дуусах хугацаа")}}">
+                </div>
+            </div>
+        {{-- Count guests --}}
+        <div class="col-md-12">
+            <div class="form-group">
+ 
+                    <div class="table table-responsive">
+                        <table class="table table-bordered " id="table">
+                            <tr>
+                                <th>№</th>
+                                <th style="width:400px">Нэр</th>
+                                <th style="width:400px">и-мэил</th>
+                                <th style="width:300px">утас</th>
+                                <th style="width:500px"> 
+                                    <button type="button" class="create-modal btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </th>
+                            </tr>
+                            {{ csrf_field() }}
+                            <?php
+                                $ids =$user->latest('created_at')->pluck('id')->first();
+                                echo $ids;
+                                $last =$booking->latest('start_date')->pluck('code')->first();
+                                
+                                //$user = App\User::where($user->id,'parent_id')->get();
+                                //echo $user;
+                                $childrens = $user->children()->get();
+                         
+                                $no=1; 
+                            ?>
+                            {{-- @if ($user->parent_id = $user->id) --}}
+                            {{-- @for ($i = 1; $i < $booking->total_guests; $i++) --}}
+                                
+                                    @foreach ($childrens as $item) 
+                                    <tr>
+                                        <td>{{$no++}}  </td>
+                                        <td>{{ $item->name}}  </td>
+                                        <td>{{ $item->email}}</td>
+                                        <td>{{ $item->phone}}    </td>
+                                        <td> 
+                                            {{-- <a href="#" class="show-modal btn btn-info btn-xs" style="width: 30%">
+                                                <i class="fa fa-eye"></i>
+                                            </a> --}}
+                                            <a type="button" value={{$item->id}} class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg"
+                                                data-id="{{$item->id}}">
+                                                <i class="fa fa-pencil"></i>{{$item->id}}
+                                            </a>
+                                            <a href="#" class="delete-modal btn btn-danger" style="width: 30%">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {{-- start modal --}}
+
+                                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            
+                                            <div class="modal-header">
+                                            <h4 class="modal-title">Аялагчийн мэдээлэл</h4>
+                                                <hr>
+                                                
+                                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                            </div>
+                                            <div class="body">
+                                                <div id="booking-forms">
+                                                    <div class="booking-form1">
+                                                        {{ csrf_field() }}
+                                                        @include('Booking::frontend/booking/add_form')
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- end modal --}}
+                                    @endforeach
+                            {{-- @endfor --}}
+                            {{-- @endif --}}
+                        </table>
+                    </div>
+                
+            </div>
+        </div>
+
             <div class="col-md-12">
                 <label >{{__("Special Requirements")}} </label>
                 <textarea name="customer_notes" cols="30" rows="6" class="form-control" placeholder="{{__('Special Requirements')}}"></textarea>
@@ -76,7 +205,7 @@
     @include ($service->checkout_form_payment_file ?? 'Booking::frontend/booking/checkout-payment')
 
     @php
-    $term_conditions = setting_item('booking_term_conditions');
+        $term_conditions = setting_item('booking_term_conditions');
     @endphp
 
     <div class="form-group">
@@ -89,7 +218,6 @@
             {{recaptcha_field('booking')}}
         </div>
     @endif
-    <div class="html_before_actions"></div>
 
     <p class="alert-text mt10" v-show=" message.content" v-html="message.content" :class="{'danger':!message.type,'success':message.type}"></p>
 
@@ -97,5 +225,11 @@
         <button class="btn btn-danger" @click="doCheckout">{{__('Submit')}}
             <i class="fa fa-spin fa-spinner" v-show="onSubmit"></i>
         </button>
+    </div>
+</div>
+
+<div id="create" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
     </div>
 </div>

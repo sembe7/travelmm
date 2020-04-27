@@ -53,6 +53,7 @@ class CreateBravoTours extends Migration
             $table->date('tourEnd')->nullable();
             $table->string('country',50)->nullable();
             $table->string('Destination',255)->nullable();
+            $table->text('days')->nullable()->after('faqs');
 
             //Languages
             $table->bigInteger('origin_id')->nullable();

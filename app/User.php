@@ -23,15 +23,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'id',
         'name',
         'first_name',
         'last_name',
         'email',
+        'parent_id',
         'email_verified_at',
         'password',
         'address',
         'address2',
         'phone',
+        'phone2',
         'birthday',
         'city',
         'state',
@@ -40,6 +43,13 @@ class User extends Authenticatable
         'last_login_at',
         'avatar_id',
         'bio',
+        'parent_id',
+        'Foreign_FirstName',
+        'Foreign_LastName',
+        'Foreign_Registration',
+        'Registration',
+        'Foreign_Start_Date',
+        'Foreign_End_Sate',
     ];
 
     /**
@@ -104,6 +114,11 @@ class User extends Authenticatable
             }
         }
 
+    }
+
+    public function children()
+    {
+        return $this->hasMany('App\User','parent_id', 'id');
     }
 
     public function batchInsertMeta($metaArrs = []){

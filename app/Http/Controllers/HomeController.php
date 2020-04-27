@@ -74,7 +74,7 @@ class HomeController extends Controller
         Permission::findOrCreate('dashboard_vendor_access');
 
         $vendor = Role::findOrCreate('vendor');
-
+        
         $vendor->givePermissionTo('media_upload');
         $vendor->givePermissionTo('tour_view');
         $vendor->givePermissionTo('tour_create');
@@ -82,7 +82,7 @@ class HomeController extends Controller
         $vendor->givePermissionTo('tour_delete');
         $vendor->givePermissionTo('dashboard_vendor_access');
 
-        $role = Role::findOrCreate('administrator');
+        //$role = Role::findOrCreate('administrator');
 
         $role->givePermissionTo('dashboard_vendor_access');
 

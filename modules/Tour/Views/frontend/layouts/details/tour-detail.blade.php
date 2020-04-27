@@ -40,10 +40,10 @@
                         <i class="icofont-wall-clock"></i>
                     </div>
                     <div class="info">
-                        <h4 class="name">{{__("Duration")}}</h4>
+                        <h4 class="name">{{__("Date")}}</h4>
                         <p class="value">
                             @if($row->duration > 1)
-                                {{ __(":number hours",array('number'=>$row->duration)) }}
+                                {{ __(":start  :End",array('start'=>$row->tourStart,'End'=>$row->tourEnd)) }}
                             @else
                                 {{ __(":number hour",array('number'=>$row->duration)) }}
                             @endif
@@ -108,6 +108,33 @@
         </div>
     </div>
 @endif
+{{-- new example --}}
+@if($row->days)
+<div class="g-faq">
+    <h3> {{__("Аяллын өдрүүд")}} </h3>
+    @foreach($row->days as $item)
+        <div class="item">
+            <div class="header">
+                {{-- <i class="field-icon icofont-support-faq"></i> --}}
+                <i class="field-icon icofont-paper-plane"></i>
+                <h5>{{$item['day']}}</h5>
+                <span class="arrow"><i class="fa fa-angle-down"></i></span>
+            </div>
+            <div class="body">
+                <div class="card bg-light mb-3">
+                    <div class="card-header">
+                        {{$item['description']}}
+                    </div>
+                <div class="card-text">
+                <button class="btn btn-primary">{{$item['hotel']}}</button><div class="btn btn-outline-success" style="float: right">{{$item['food']}}</div>
+                </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+</div>
+@endif
+{{-- new example --}}
 @if($row->content)
     <div class="g-overview">
         <h3>{{__("Overview")}}</h3>

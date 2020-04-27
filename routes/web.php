@@ -60,6 +60,7 @@ Route::group(['prefix'=>config('news.news_route_prefix')],function(){
 
 // User Profile
 Route::post('/register','\Modules\User\Controllers\UserController@userRegister');
+Route::post('/registers','\Modules\User\Controllers\UserController@AddRegister');
 Route::post('/login','\Modules\User\Controllers\UserController@userLogin');
 Route::group(['prefix'=>'user','middleware' => ['auth']],function(){
     Route::match(['get','post'],'/dashboard','\Modules\User\Controllers\UserController@dashboard');

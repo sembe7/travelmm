@@ -23,7 +23,7 @@
                                     <div class="info-form">
                                         <ul>
                                             <li>
-                                                <div class="label">{{__('Booking Date')}}</div>
+                                                <div class="label">{{__('Booking Date ss')}}</div>
                                                 <div class="val">{{display_date($booking->created_at)}}</div>
                                             </li>
                                             @if(!empty($booking->gateway))
