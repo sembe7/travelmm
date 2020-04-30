@@ -57,6 +57,7 @@ class UserController extends FrontendController
         return view('User::frontend.profile', ['dataUser' => $user]);
     }
 
+
     public function changePassword(Request $request)
     {
         if (!empty($request->input())) {
@@ -220,6 +221,40 @@ class UserController extends FrontendController
 
     public function AddRegister(Request $request)
     {
+        /**
+         * @param Booking $booking
+         */
+        $validator = Validator::make($request->all(), [
+            'code' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $this->sendError('', ['errors' => $validator->errors()]);
+        }
+        $code = $request->input('code');
+        $booking = Booking::where('code', $code)->first();
+        if (empty($booking)) {
+            abort(404);
+        }
+
+        if ($booking->customer_id != Auth::id()) {
+            abort(404);
+        }
+        if ($booking->status != 'draft') {
+            return $this->sendError('',[
+                'url'=>$booking->getDetailUrl()
+            ]);
+        }
+        /**
+         * Google ReCapcha
+         */
+        if(ReCaptchaEngine::isEnable() and setting_item("booking_enable_recaptcha")){
+            $codeCapcha = $request->input('g-recaptcha-response');
+            if(!$codeCapcha or !ReCaptchaEngine::verify($codeCapcha)){
+                $this->sendError(__("Please verify the captcha"));
+            }
+        }
+
+
         $rules = [
             'first_name' => ['required','string','max:255'],
             'last_name'  => ['required','string','max:255'],
@@ -275,23 +310,23 @@ class UserController extends FrontendController
 
             ]);
             $ids =$user->latest('created_at')->pluck('id')->first();
-            $booking = Modules\Booking\Models\Booking::create([
-                'customer_id'=> $ids,
-                'code' => $request->input('code'),
-                'first_name'     => $request->input('first_name'),
-                'last_name'     => $request->input('last_name'),
-                'email'    => $request->input('email'),
-                // 'password' => Hash::make($request->input('password')),
-                'status'   => 'publish',
+            // $booking = Modules\Booking\Models\Booking::create([
+            //     //'customer_id'=> Auth::id(),
+            //     'code' => $request->input('code'),
+            //     'first_name'     => $request->input('first_name'),
+            //     'last_name'     => $request->input('last_name'),
+            //     'email'    => $request->input('email'),
+            //     // 'password' => Hash::make($request->input('password')),
+            //     'status'   => 'publish',
  
-                'Foreign_FirstName'=> $request->input('Foreign_FirstName'),
-                'Foreign_LastName' => $request->input('Foreign_LastName'),
-                'Foreign_Registration'=>$request->input('Foreign_Registration'),
-                'Registarion'=> $request->input('Registarion'),
-                'Foreign_Start_date' => $request->input('Foreign_Start_date'),
-                'Foreign_End_date' => $request->input('Foreign_End_date'),
+            //     'Foreign_FirstName'=> $request->input('Foreign_FirstName'),
+            //     'Foreign_LastName' => $request->input('Foreign_LastName'),
+            //     'Foreign_Registration'=>$request->input('Foreign_Registration'),
+            //     'Registarion'=> $request->input('Registarion'),
+            //     'Foreign_Start_date' => $request->input('Foreign_Start_date'),
+            //     'Foreign_End_date' => $request->input('Foreign_End_date'),
 
-            ]);
+            // ]);
 
             // Auth::loginUsingId($user->id);
             // try {
@@ -300,21 +335,78 @@ class UserController extends FrontendController
             //     Log::warning("SendMailUserRegistered: ".$exception->getMessage());
             // }
             $last =$booking->latest('start_date')->pluck('code')->first();
-           
-            $user->assignRole('customer');
-            return response()->json([
-                'error'    => false,
-                'message'  => false,
-                'last_id' => $ids,
-                //'redirect' => url('/booking'.'/'.$last.'/checkout'),
 
-            ], 200);
+            $user->assignRole('customer');
+            // return response()->json([
+            //     'error'    => false,
+            //     'message'  => false,
+            //     'last_id' => $user->id,
+            //     'redirect' => url('/booking'.'/'.$last.'/checkout'),
+
+            // ], 200);
+            
         }
+        return redirect('/booking'.'/'.$last.'/checkout')->with('success','data edited');
+    }
+    public function EditRegister(Request $request,$id)
+    {
+        $rules = [
+            'parent_id'=> ['required'],
+        ];
+        $messages = [
+            'email.required'    => __('Email is required field'),
+        ];
+
+        // $code = $request->input('code');
+        // $booking = Booking::where('code', $code)->first();
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['error'   => true,
+                                     'messages' => $validator->errors()
+            ], 200);
+        } else {
+            
+            $user = User::find($id);
+            $request->request->remove('email');
+            $user->first_name = $request->input('first_name');
+            $user->last_name = $request->input('last_name');
+            $user->phone = $request->input('phone');
+            $user->phone = $request->input('phone2');
+            $user->address = $request->input('address_line_1');
+            $user->address2 = $request->input('address_line_2');
+            $user->city = $request->input('city');
+            $user->state = $request->input('state');
+            $user->zip_code = $request->input('zip_code');
+            $user->country = $request->input('country');
+            $user->Foreign_FirstName = $request->input('Foreign_FirstName');
+            $user->Foreign_LastName = $request->input('Foreign_LastName');
+            $user->Foreign_Registration = $request->input('Foreign_Registration');
+            $user->Registration = $request->input('Registration');
+            $user->Foreign_Start_Date = $request->input('Foreign_Start_Date');
+            $user->Foreign_End_Date = $request->input('Foreign_End_Date');
+            $user->save();
+
+            $booking = new Booking;
+            $ids =$user->latest('created_at')->pluck('id')->first();
+            $last =$booking->latest('start_date')->pluck('code')->first();
+
+            $user->assignRole('customer');
+            // return response()->json([
+            //     'error'    => false,
+            //     'message'  => false,
+            //     'last_id' => $user->id,
+            //     'redirect' => url('/booking'.'/'.$last.'/checkout'),
+
+            // ], 200);
+            
+        }
+        return redirect('/booking'.'/'.$last.'/checkout')->with('success','data edited');
     }
 
     public function subscribe(Request $request)
     {
-
         $this->validate($request, [
             'email' => 'required|email|max:255'
         ]);
@@ -333,5 +425,11 @@ class UserController extends FrontendController
             $a->save();
             $this->sendSuccess([], __('Thank you for subscribing'));
         }
+    }
+    public function delete($id){
+        $user = User::find($id);
+        $user->delete();
+        $last =Booking::latest('start_date')->pluck('code')->first();
+        return redirect('/booking'.'/'.$last.'/checkout')->with('success','data deleted');
     }
 }

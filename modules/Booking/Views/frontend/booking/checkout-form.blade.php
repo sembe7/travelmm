@@ -112,6 +112,7 @@
                 </div>
             </div>
         {{-- Count guests --}}
+        
         <div class="col-md-12">
             <div class="form-group">
  
@@ -122,10 +123,14 @@
                                 <th style="width:400px">Нэр</th>
                                 <th style="width:400px">и-мэил</th>
                                 <th style="width:300px">утас</th>
-                                <th style="width:500px"> 
+                                <th style="width:200px"> 
                                     <button type="button" class="create-modal btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">
                                         <i class="fa fa-plus"></i>
                                     </button>
+                                    @include('Booking::frontend/booking/add_form')
+                                </th>
+                                <th style="width:200px"> 
+                                    
                                 </th>
                             </tr>
                             {{ csrf_field() }}
@@ -142,52 +147,33 @@
                             ?>
                             {{-- @if ($user->parent_id = $user->id) --}}
                             {{-- @for ($i = 1; $i < $booking->total_guests; $i++) --}}
-                                
-                                    @foreach ($childrens as $item) 
-                                    <tr>
-                                        <td>{{$no++}}  </td>
-                                        <td>{{ $item->name}}  </td>
-                                        <td>{{ $item->email}}</td>
-                                        <td>{{ $item->phone}}    </td>
-                                        <td> 
-                                            {{-- <a href="#" class="show-modal btn btn-info btn-xs" style="width: 30%">
-                                                <i class="fa fa-eye"></i>
-                                            </a> --}}
-                                            <a type="button" value={{$item->id}} class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg"
-                                                data-id="{{$item->id}}">
-                                                <i class="fa fa-pencil"></i>{{$item->id}}
-                                            </a>
-                                            <a href="#" class="delete-modal btn btn-danger" style="width: 30%">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                @foreach ($childrens as $item) 
+                                <tr>
+                                    <td>{{$no++}}  </td>
+                                    <td>{{ $item->name}}  </td>
+                                    <td>{{ $item->email}}</td>
+                                    <td>{{ $item->phone}}    </td>
+                                    <td> 
+                                        {{-- <a href="#" class="show-modal btn btn-info btn-xs" style="width: 30%">
+                                            <i class="fa fa-eye"></i>
+                                        </a> --}}
+                                    <button type="button" value={{$item->id}} class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg{{$item->id}}"
+                                            data-id="{{$id = $item->id}}" >
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        @include('Booking::frontend/booking/edit_form')
                                         </td>
-                                    </tr>
-                                    {{-- start modal --}}
-
-                                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            
-                                            <div class="modal-header">
-                                            <h4 class="modal-title">Аялагчийн мэдээлэл</h4>
-                                                <hr>
-                                                
-                                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                            </div>
-                                            <div class="body">
-                                                <div id="booking-forms">
-                                                    <div class="booking-form1">
-                                                        {{ csrf_field() }}
-                                                        @include('Booking::frontend/booking/add_form')
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- end modal --}}
-                                    @endforeach
+                                        <td>
+                                    <form method="post" class="delete-form" action="{{action('\Modules\User\Controllers\UserController@delete',$item->id)}}">
+                                        @csrf
+                                            <button type="submit" class="delete-modal btn btn-danger" >
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
+                                        
+                                    </td>
+                                </tr>
+                                @endforeach
                             {{-- @endfor --}}
                             {{-- @endif --}}
                         </table>

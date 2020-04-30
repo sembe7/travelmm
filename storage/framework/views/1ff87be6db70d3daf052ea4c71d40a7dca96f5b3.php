@@ -112,6 +112,7 @@
                 </div>
             </div>
         
+        
         <div class="col-md-12">
             <div class="form-group">
  
@@ -122,10 +123,14 @@
                                 <th style="width:400px">Нэр</th>
                                 <th style="width:400px">и-мэил</th>
                                 <th style="width:300px">утас</th>
-                                <th style="width:500px"> 
+                                <th style="width:200px"> 
                                     <button type="button" class="create-modal btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">
                                         <i class="fa fa-plus"></i>
                                     </button>
+                                    <?php echo $__env->make('Booking::frontend/booking/add_form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                </th>
+                                <th style="width:200px"> 
+                                    
                                 </th>
                             </tr>
                             <?php echo e(csrf_field()); ?>
@@ -143,52 +148,31 @@
                             ?>
                             
                             
-                                
-                                    <?php $__currentLoopData = $childrens; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
-                                    <tr>
-                                        <td><?php echo e($no++); ?>  </td>
-                                        <td><?php echo e($item->name); ?>  </td>
-                                        <td><?php echo e($item->email); ?></td>
-                                        <td><?php echo e($item->phone); ?>    </td>
-                                        <td> 
-                                            
-                                            <a type="button" value=<?php echo e($item->id); ?> class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg"
-                                                data-id="<?php echo e($item->id); ?>">
-                                                <i class="fa fa-pencil"></i><?php echo e($item->id); ?>
-
-                                            </a>
-                                            <a href="#" class="delete-modal btn btn-danger" style="width: 30%">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                <?php $__currentLoopData = $childrens; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
+                                <tr>
+                                    <td><?php echo e($no++); ?>  </td>
+                                    <td><?php echo e($item->name); ?>  </td>
+                                    <td><?php echo e($item->email); ?></td>
+                                    <td><?php echo e($item->phone); ?>    </td>
+                                    <td> 
+                                        
+                                    <button type="button" value=<?php echo e($item->id); ?> class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg<?php echo e($item->id); ?>"
+                                            data-id="<?php echo e($id = $item->id); ?>" >
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <?php echo $__env->make('Booking::frontend/booking/edit_form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                                         </td>
-                                    </tr>
-                                    
-
-                                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            
-                                            <div class="modal-header">
-                                            <h4 class="modal-title">Аялагчийн мэдээлэл</h4>
-                                                <hr>
-                                                
-                                                <button type="button" class="close" data-dismiss="modal">×</button>
-                                            </div>
-                                            <div class="body">
-                                                <div id="booking-forms">
-                                                    <div class="booking-form1">
-                                                        <?php echo e(csrf_field()); ?>
-
-                                                        <?php echo $__env->make('Booking::frontend/booking/add_form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <td>
+                                    <form method="post" class="delete-form" action="<?php echo e(action('\Modules\User\Controllers\UserController@delete',$item->id)); ?>">
+                                        <?php echo csrf_field(); ?>
+                                            <button type="submit" class="delete-modal btn btn-danger" >
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
+                                        
+                                    </td>
+                                </tr>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             
                             
                         </table>

@@ -18,13 +18,6 @@ class BookingController extends \App\Http\Controllers\Controller
         //        $this->middleware('auth');
     }
 
-    function parent_api_id($id){
-        $childs = User::with('children')
-            ->where( 'id', $id)
-            ->get();
-        return response()->json($childs);
-    }
-
     public function checkout($code)
     {
 

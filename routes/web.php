@@ -61,12 +61,17 @@ Route::group(['prefix'=>config('news.news_route_prefix')],function(){
 // User Profile
 Route::post('/register','\Modules\User\Controllers\UserController@userRegister');
 Route::post('/registers','\Modules\User\Controllers\UserController@AddRegister');
+Route::post('/delete{id}','\Modules\User\Controllers\UserController@delete');
+Route::post('/EditRegister{id}','\Modules\User\Controllers\UserController@EditRegister');
+
 Route::post('/login','\Modules\User\Controllers\UserController@userLogin');
 Route::group(['prefix'=>'user','middleware' => ['auth']],function(){
     Route::match(['get','post'],'/dashboard','\Modules\User\Controllers\UserController@dashboard');
     Route::post('/reloadChart','\Modules\User\Controllers\UserController@reloadChart');
 
     Route::match(['get','post'],'/profile','\Modules\User\Controllers\UserController@profile');
+
+
     Route::match(['get','post'],'/profile/change-password','\Modules\User\Controllers\UserController@changePassword');
     Route::get('/booking-history','\Modules\User\Controllers\UserController@bookingHistory');
 

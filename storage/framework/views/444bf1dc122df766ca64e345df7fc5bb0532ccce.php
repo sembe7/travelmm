@@ -10,12 +10,17 @@
                         <h3 class="form-title"><?php echo e(__('Booking Submission')); ?></h3>
                          <div class="booking-form">
                              <?php echo $__env->make($service->checkout_form_file ?? 'Booking::frontend/booking/checkout-form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
                          </div>
                     </div>
                     <div class="col-md-4">
                         <div class="booking-detail">
                             <?php echo $__env->make($service->checkout_booking_detail_file ?? '', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                            
+                            
+
+                            
+
+                            
                         </div>
                     </div>
                 </div>

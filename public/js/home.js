@@ -269,6 +269,73 @@ jQuery(function($) {
         });
     });
 
+    $('.bravo-edit-form-register [type=submit]').click(function(e) {
+        e.preventDefault();
+        let form = $(this).closest('.bravo-edit-form-register');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': form.find('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            'url': bookingCore.url + '/EditRegister'+form.find('input[name=id]').val(),
+            'data': {
+                'code': form.find('input[name=code]').val(),
+                'email': form.find('input[name=email]').val(),
+                'password': form.find('input[name=password]').val(),
+                'first_name': form.find('input[name=first_name]').val(),
+                'last_name': form.find('input[name=last_name]').val(),
+                'Foreign_FirstName': form.find('input[name=Foreign_FirstName]').val(),
+                'Foreign_LastName': form.find('input[name=Foreign_LastName]').val(),
+                'Foreign_Registration': form.find('input[name=Foreign_Registration]').val(),
+                'Registration': form.find('input[name=Registration]').val(),
+                'Foreign_Start_Date': form.find('input[name=Foreign_Start_Date]').val(),
+                'Foreign_End_Date': form.find('input[name=Foreign_End_Date]').val(),
+                'parent_id': form.find('input[name=parent_id]').val(),
+                'term': form.find('input[name=term]').is(":checked") ? 1 : '',
+                'g-recaptcha-response': form.find('[name=g-recaptcha-response]').val(),
+            },
+            'type': 'POST',
+            beforeSend: function() {
+                form.find('.error').hide();
+                form.find('.icon-loading').css("display", 'inline-block');
+                $('#success_mode').html('Амжилттай ');
+                alert('success');
+            },
+            success: function(data) {
+                form.find('.icon-loading').hide();
+                if (data.error === true) {
+                    if (data.messages !== undefined) {
+                        for (var item in data.messages) {
+                            var msg = data.messages[item];
+                            form.find('.error-' + item).show().text(msg[0]);
+                        }
+                    }
+                    if (data.messages.message_error !== undefined) {
+                        form.find('.message-error').show().html('<div class="alert alert-danger">' + data.messages.message_error[0] + '</div>');
+                    }
+                }
+                if (data.redirect !== undefined) {
+                    window.location.href = data.redirect
+                }
+            },
+            error: function(e) {
+                form.find('.icon-loading').hide();
+                if (typeof e.responseJSON !== "undefined" && typeof e.responseJSON.message != 'undefined') {
+                    form.find('.message-error').show().html('<div class="alert alert-danger">' + e.responseJSON.message + '</div>');
+                }
+            }
+        });
+    });
+    $(document).ready(function(){
+        $('.delete_form').on('submit',function(){
+            if(confirm('Are you sure you want to delete it??')){
+                return true;
+            }else{
+                return false;
+            }
+        })
+    })
     $('#register').on('show.bs.modal', function(event) {
         $('#login').modal('hide')
     })
