@@ -16,29 +16,76 @@
                     <div class="col-md-4">
                         <div class="booking-detail">
                             @include ($service->checkout_booking_detail_file ?? '')
+                            <div class="col-md-6">
+                                <button style="width: 320px" type="button" class="create-modal btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">
+                                    Хамтран аялагчийн мэдээлэл нэмэх 
+                                    {{-- <i class="fa fa-plus"></i> --}}
+                                </button>
+                            </div>
                             
+                            @include('Booking::frontend/booking/add_form')
                             {{-- start modal --}}
 
-                            {{-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
+                            {{-- Count guests --}}
+        
+        <div class="col-md-12" id="table_refresh">
+            <div class="form-group">
+ 
+                    <div class="table table-responsive">
+                        <table class="table table-bordered " id="table">
+                            <tr>
+                                <th>№</th>
+                                <th style="width:400px">Нэр</th>
+                                {{-- <th style="width:400px">и-мэил</th>
+                                <th style="width:300px">утас</th> --}}
+                                <th> 
+                                    
+                                </th>
+                                <th > 
+                                    
+                                </th>
+                            </tr>
+                            {{ csrf_field() }}
+                            <?php
+                                $childrens = $user->children()->get();
+                                $no=1; 
+                            ?>
+                            {{-- @if ($user->parent_id = $user->id) --}}
+                            {{-- @for ($i = 1; $i < $booking->total_guests; $i++) --}}
+                                @foreach ($childrens as $item) 
+                                <tr>
+                                    <td>{{$no++}}  </td>
+                                    <td>{{ $item->name}}  </td>
+                                    {{-- <td>{{ $item->email}}</td>
+                                    <td>{{ $item->phone}}    </td> --}}
+                                    <td> 
+                                        {{-- <a href="#" class="show-modal btn btn-info btn-xs" style="width: 30%">
+                                            <i class="fa fa-eye"></i>
+                                        </a> --}}
+                                        <button type="button" value={{$item->id}} class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg{{$item->id}}"
+                                            data-id="{{$ids = $item->id}}" >
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        @include('Booking::frontend/booking/edit_form')
+                                        </td>
+                                        <td>
+                                    <form method="post" class="delete-form" action="{{action('\Modules\User\Controllers\UserController@delete',$item->id)}}">
+                                        @csrf
+                                            <button type="submit" class="delete-modal btn btn-danger" >
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                         
-                                        <div class="modal-header">
-                                        <h4 class="modal-title">Аялагчийн мэдээлэл</h4>
-                                            <hr>
-                                            
-                                            <button type="button" class="close" data-dismiss="modal">×</button>
-                                        </div>
-                                        <div class="body">
-                                            
-                                                    
-                                             @include('Booking::frontend/booking/add_form')
-                                                
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
+                                    </td>
+                                </tr>
+                                @endforeach
+                            {{-- @endfor --}}
+                            {{-- @endif --}}
+                        </table>
+                    </div>
+                
+            </div>
+        </div>
 
                             {{-- end modal --}}
                         </div>

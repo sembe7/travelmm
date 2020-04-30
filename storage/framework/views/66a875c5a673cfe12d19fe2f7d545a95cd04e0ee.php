@@ -5,7 +5,7 @@
             <div class="modal-content">
                 
                 <div class="modal-header">
-                <h4 class="modal-title">Аялагчийн мэдээлэл засварлах <?php echo e($id); ?></h4>
+                <h4 class="modal-title">Аялагчийн мэдээлэл засварлах <?php echo e($ids); ?></h4>
                     <hr>
                     
                     <button type="button" class="close" data-dismiss="modal">×</button>
@@ -14,7 +14,7 @@
                     <div class="form bravo-edit-form-register" >
                     <input type="hidden" name="code" value="<?php echo e($booking->code); ?>">
                     <input type="hidden" value="<?php echo e($user->id); ?>" class="form-control"  name="parent_id">
-                    <input type="hidden" value="<?php echo e($id); ?>" class="form-control"  name="id">
+                    <input type="hidden" value="<?php echo e($ids); ?>" class="form-control"  name="id">
                     <div class="form-section">
                         <div class="row">
                             <div class="col-md-6">

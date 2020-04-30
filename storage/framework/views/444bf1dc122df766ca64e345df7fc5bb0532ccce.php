@@ -15,10 +15,73 @@
                     <div class="col-md-4">
                         <div class="booking-detail">
                             <?php echo $__env->make($service->checkout_booking_detail_file ?? '', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                            <div class="col-md-6">
+                                <button style="width: 320px" type="button" class="create-modal btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">
+                                    Хамтран аялагчийн мэдээлэл нэмэх 
+                                    
+                                </button>
+                            </div>
                             
+                            <?php echo $__env->make('Booking::frontend/booking/add_form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                             
 
                             
+        
+        <div class="col-md-12" id="table_refresh">
+            <div class="form-group">
+ 
+                    <div class="table table-responsive">
+                        <table class="table table-bordered " id="table">
+                            <tr>
+                                <th>№</th>
+                                <th style="width:400px">Нэр</th>
+                                
+                                <th> 
+                                    
+                                </th>
+                                <th > 
+                                    
+                                </th>
+                            </tr>
+                            <?php echo e(csrf_field()); ?>
+
+                            <?php
+                                $childrens = $user->children()->get();
+                                $no=1; 
+                            ?>
+                            
+                            
+                                <?php $__currentLoopData = $childrens; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
+                                <tr>
+                                    <td><?php echo e($no++); ?>  </td>
+                                    <td><?php echo e($item->name); ?>  </td>
+                                    
+                                    <td> 
+                                        
+                                        <button type="button" value=<?php echo e($item->id); ?> class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg<?php echo e($item->id); ?>"
+                                            data-id="<?php echo e($ids = $item->id); ?>" >
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <?php echo $__env->make('Booking::frontend/booking/edit_form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                        </td>
+                                        <td>
+                                    <form method="post" class="delete-form" action="<?php echo e(action('\Modules\User\Controllers\UserController@delete',$item->id)); ?>">
+                                        <?php echo csrf_field(); ?>
+                                            <button type="submit" class="delete-modal btn btn-danger" >
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
+                                        
+                                    </td>
+                                </tr>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            
+                            
+                        </table>
+                    </div>
+                
+            </div>
+        </div>
 
                             
                         </div>

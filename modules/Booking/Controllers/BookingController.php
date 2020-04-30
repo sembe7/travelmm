@@ -113,14 +113,13 @@ class BookingController extends \App\Http\Controllers\Controller
             'first_name'      => 'required|string|max:255',
             'last_name'       => 'required|string|max:255',
             'email'           => 'required|string|email|max:255',
-            'phone'           => 'required|string|max:255',
+            'phone'           => 'required',
             'payment_gateway' => 'required',
             'term_conditions' => 'required',
             'Foreign_Registration'=> 'required|string|min:8',
             'Registration'=> 'required|string|min:10',
-            'Foreign_Start_Date'=>'required',
-            'Foreign_End_Date'=>'required',
         ];
+        
         $rules = $service->filterCheckoutValidate($request, $rules);
         if (!empty($rules)) {
             $validator = Validator::make($request->all(), $rules);
@@ -166,7 +165,7 @@ class BookingController extends \App\Http\Controllers\Controller
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->phone = $request->input('phone');
-        $user->phone = $request->input('phone2');
+        $user->phone2 = $request->input('phone2');
         $user->address = $request->input('address_line_1');
         $user->address2 = $request->input('address_line_2');
         $user->city = $request->input('city');

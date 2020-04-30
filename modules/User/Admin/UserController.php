@@ -181,6 +181,16 @@ class UserController extends AdminController
         $row->bio = clean($request->input('bio'));
         $row->status = $request->input('status');
         $row->avatar_id = $request->input('avatar_id');
+
+        $row->Foreign_FirstName = $request->input('Foreign_FirstName');
+        $row->Foreign_LastName = $request->input('Foreign_LasName');
+        $row->Foreign_Registration = $request->input('Foreign_Registration');
+        $row->Registration = $request->input('Registration');
+        $row->Foreign_Start_Date = $request->input('Foreign_Start_Date');
+        $row->Foreign_End_Date = $request->input('Foreign_End_Date');
+        $row->Registration_image = $request->input('Registration_image');
+        $row->Foreign_Registration_image = $request->input('Foreign_Registration_image');
+
         if ($row->save()) {
 
             if ($request->input('role_id') and $role = Role::findById($request->input('role_id'))) {

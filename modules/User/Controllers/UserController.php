@@ -258,6 +258,7 @@ class UserController extends FrontendController
         $rules = [
             'first_name' => ['required','string','max:255'],
             'last_name'  => ['required','string','max:255'],
+            'phone' => ['required'],
             'parent_id'=> ['required'],
             'email' => ['required','string','email','max:255','unique:users'],
             'Foreign_FirstName' => ['required','string','max:255',],
@@ -272,7 +273,7 @@ class UserController extends FrontendController
             // ],
         ];
         $messages = [
-
+            'phone'=>__('phone is required'),
             'Registration'=>__('Registration is required'),
             'Foreign_Start_Date'=>__('Foreign_Start_Date is required'),
             'Foreign_End_Date'=>__('Foreign_End_Date is required '),
@@ -298,6 +299,7 @@ class UserController extends FrontendController
                 'first_name'     => $request->input('first_name'),
                 'last_name'     => $request->input('last_name'),
                 'email'    => $request->input('email'),
+                'phone' => $request->input('phone'),
                 // 'password' => Hash::make($request->input('password')),
                 'status'   => 'publish',
                 'parent_id'=>$request->input('parent_id'),
@@ -348,6 +350,7 @@ class UserController extends FrontendController
         }
         return redirect('/booking'.'/'.$last.'/checkout')->with('success','data edited');
     }
+
     public function EditRegister(Request $request,$id)
     {
         $rules = [
@@ -392,7 +395,6 @@ class UserController extends FrontendController
             $ids =$user->latest('created_at')->pluck('id')->first();
             $last =$booking->latest('start_date')->pluck('code')->first();
 
-            $user->assignRole('customer');
             // return response()->json([
             //     'error'    => false,
             //     'message'  => false,
@@ -400,7 +402,7 @@ class UserController extends FrontendController
             //     'redirect' => url('/booking'.'/'.$last.'/checkout'),
 
             // ], 200);
-            
+            return redirect('/booking'.'/'.$last.'/checkout')->with('success','data edited');
         }
         return redirect('/booking'.'/'.$last.'/checkout')->with('success','data edited');
     }

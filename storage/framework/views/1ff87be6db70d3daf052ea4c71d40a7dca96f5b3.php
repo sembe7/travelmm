@@ -21,10 +21,10 @@
                     <input type="email" placeholder="<?php echo e(__("email@domain.com")); ?>" class="form-control" value="<?php echo e($user->email ?? ''); ?>" name="email">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 field-phone">
                 <div class="form-group">
                     <label ><?php echo e(__("Phone")); ?> <span class="required">*</span></label>
-                    <input type="email" placeholder="<?php echo e(__("Your Phone")); ?>" class="form-control" value="<?php echo e($user->phone ?? ''); ?>" name="phone">
+                    <input type="text" placeholder="<?php echo e(__("Your Phone")); ?>" class="form-control" value="<?php echo e($user->phone ?? ''); ?>" name="phone">
                 </div>
             </div>
             <div class="col-md-6 field-address-line-1">
@@ -105,7 +105,7 @@
                     <input type="date" class="form-control" value="<?php echo e($user->Foreign_Start_Date ?? ''); ?>" name="Foreign_Start_Date" placeholder="<?php echo e(__("Гадаад паспортын олгосон өдөр")); ?>">
                 </div>
             </div>
-            <div class="col-md-6 field-travel-destination">
+            <div class="col-md-6 field-Foreign_End_Date">
                 <div class="form-group">
                     <label ><?php echo e(__("Гадаад паспортын дуусах хугацаа")); ?> <span class="required">*</span> </label>
                     <input type="date" class="form-control" value="<?php echo e($user->Foreign_End_Date ?? ''); ?>" name="Foreign_End_Date" placeholder="<?php echo e(__("Гадаад паспортын дуусах хугацаа")); ?>">
@@ -113,73 +113,7 @@
             </div>
         
         
-        <div class="col-md-12">
-            <div class="form-group">
- 
-                    <div class="table table-responsive">
-                        <table class="table table-bordered " id="table">
-                            <tr>
-                                <th>№</th>
-                                <th style="width:400px">Нэр</th>
-                                <th style="width:400px">и-мэил</th>
-                                <th style="width:300px">утас</th>
-                                <th style="width:200px"> 
-                                    <button type="button" class="create-modal btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                    <?php echo $__env->make('Booking::frontend/booking/add_form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                                </th>
-                                <th style="width:200px"> 
-                                    
-                                </th>
-                            </tr>
-                            <?php echo e(csrf_field()); ?>
-
-                            <?php
-                                $ids =$user->latest('created_at')->pluck('id')->first();
-                                echo $ids;
-                                $last =$booking->latest('start_date')->pluck('code')->first();
-                                
-                                //$user = App\User::where($user->id,'parent_id')->get();
-                                //echo $user;
-                                $childrens = $user->children()->get();
-                         
-                                $no=1; 
-                            ?>
-                            
-                            
-                                <?php $__currentLoopData = $childrens; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
-                                <tr>
-                                    <td><?php echo e($no++); ?>  </td>
-                                    <td><?php echo e($item->name); ?>  </td>
-                                    <td><?php echo e($item->email); ?></td>
-                                    <td><?php echo e($item->phone); ?>    </td>
-                                    <td> 
-                                        
-                                    <button type="button" value=<?php echo e($item->id); ?> class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg<?php echo e($item->id); ?>"
-                                            data-id="<?php echo e($id = $item->id); ?>" >
-                                            <i class="fa fa-pencil"></i>
-                                        </button>
-                                        <?php echo $__env->make('Booking::frontend/booking/edit_form', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                                        </td>
-                                        <td>
-                                    <form method="post" class="delete-form" action="<?php echo e(action('\Modules\User\Controllers\UserController@delete',$item->id)); ?>">
-                                        <?php echo csrf_field(); ?>
-                                            <button type="submit" class="delete-modal btn btn-danger" >
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </form>
-                                        
-                                    </td>
-                                </tr>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            
-                            
-                        </table>
-                    </div>
-                
-            </div>
-        </div>
+  
 
             <div class="col-md-12">
                 <label ><?php echo e(__("Special Requirements")); ?> </label>

@@ -220,6 +220,7 @@ jQuery(function($) {
         $.ajax({
             'url': bookingCore.url + '/registers',
             'data': {
+                'phone': form.find('input[name=phone]').val(),
                 'code': form.find('input[name=code]').val(),
                 'email': form.find('input[name=email]').val(),
                 'password': form.find('input[name=password]').val(),
@@ -241,9 +242,8 @@ jQuery(function($) {
                 form.find('.icon-loading').css("display", 'inline-block');
             },
             success: function(data) {
-                console.log(data);
-                $('#success_mode').html('Амжилттай ');
-                alert('success');
+                location.reload(true);
+
                 form.find('.icon-loading').hide();
                 if (data.error === true) {
                     if (data.messages !== undefined) {
@@ -280,6 +280,7 @@ jQuery(function($) {
         $.ajax({
             'url': bookingCore.url + '/EditRegister'+form.find('input[name=id]').val(),
             'data': {
+                'phone': form.find('input[name=phone]').val(),
                 'code': form.find('input[name=code]').val(),
                 'email': form.find('input[name=email]').val(),
                 'password': form.find('input[name=password]').val(),
@@ -303,6 +304,7 @@ jQuery(function($) {
                 alert('success');
             },
             success: function(data) {
+                location.reload(true);
                 form.find('.icon-loading').hide();
                 if (data.error === true) {
                     if (data.messages !== undefined) {

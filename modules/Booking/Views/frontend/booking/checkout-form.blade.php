@@ -21,10 +21,10 @@
                     <input type="email" placeholder="{{__("email@domain.com")}}" class="form-control" value="{{$user->email ?? ''}}" name="email">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 field-phone">
                 <div class="form-group">
                     <label >{{__("Phone")}} <span class="required">*</span></label>
-                    <input type="email" placeholder="{{__("Your Phone")}}" class="form-control" value="{{$user->phone ?? ''}}" name="phone">
+                    <input type="text" placeholder="{{__("Your Phone")}}" class="form-control" value="{{$user->phone ?? ''}}" name="phone">
                 </div>
             </div>
             <div class="col-md-6 field-address-line-1">
@@ -105,7 +105,7 @@
                     <input type="date" class="form-control" value="{{$user->Foreign_Start_Date ?? ''}}" name="Foreign_Start_Date" placeholder="{{__("Гадаад паспортын олгосон өдөр")}}">
                 </div>
             </div>
-            <div class="col-md-6 field-travel-destination">
+            <div class="col-md-6 field-Foreign_End_Date">
                 <div class="form-group">
                     <label >{{__("Гадаад паспортын дуусах хугацаа")}} <span class="required">*</span> </label>
                     <input type="date" class="form-control" value="{{$user->Foreign_End_Date ?? ''}}" name="Foreign_End_Date" placeholder="{{__("Гадаад паспортын дуусах хугацаа")}}">
@@ -113,74 +113,7 @@
             </div>
         {{-- Count guests --}}
         
-        <div class="col-md-12">
-            <div class="form-group">
- 
-                    <div class="table table-responsive">
-                        <table class="table table-bordered " id="table">
-                            <tr>
-                                <th>№</th>
-                                <th style="width:400px">Нэр</th>
-                                <th style="width:400px">и-мэил</th>
-                                <th style="width:300px">утас</th>
-                                <th style="width:200px"> 
-                                    <button type="button" class="create-modal btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                    @include('Booking::frontend/booking/add_form')
-                                </th>
-                                <th style="width:200px"> 
-                                    
-                                </th>
-                            </tr>
-                            {{ csrf_field() }}
-                            <?php
-                                $ids =$user->latest('created_at')->pluck('id')->first();
-                                echo $ids;
-                                $last =$booking->latest('start_date')->pluck('code')->first();
-                                
-                                //$user = App\User::where($user->id,'parent_id')->get();
-                                //echo $user;
-                                $childrens = $user->children()->get();
-                         
-                                $no=1; 
-                            ?>
-                            {{-- @if ($user->parent_id = $user->id) --}}
-                            {{-- @for ($i = 1; $i < $booking->total_guests; $i++) --}}
-                                @foreach ($childrens as $item) 
-                                <tr>
-                                    <td>{{$no++}}  </td>
-                                    <td>{{ $item->name}}  </td>
-                                    <td>{{ $item->email}}</td>
-                                    <td>{{ $item->phone}}    </td>
-                                    <td> 
-                                        {{-- <a href="#" class="show-modal btn btn-info btn-xs" style="width: 30%">
-                                            <i class="fa fa-eye"></i>
-                                        </a> --}}
-                                    <button type="button" value={{$item->id}} class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg{{$item->id}}"
-                                            data-id="{{$id = $item->id}}" >
-                                            <i class="fa fa-pencil"></i>
-                                        </button>
-                                        @include('Booking::frontend/booking/edit_form')
-                                        </td>
-                                        <td>
-                                    <form method="post" class="delete-form" action="{{action('\Modules\User\Controllers\UserController@delete',$item->id)}}">
-                                        @csrf
-                                            <button type="submit" class="delete-modal btn btn-danger" >
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </form>
-                                        
-                                    </td>
-                                </tr>
-                                @endforeach
-                            {{-- @endfor --}}
-                            {{-- @endif --}}
-                        </table>
-                    </div>
-                
-            </div>
-        </div>
+  
 
             <div class="col-md-12">
                 <label >{{__("Special Requirements")}} </label>

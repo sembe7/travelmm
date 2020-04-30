@@ -60,6 +60,55 @@
                                         <input type="text" value="{{old('address2',$row->address2)}}" placeholder="{{ __('Address 2')}}" name="address2" class="form-control">
                                     </div>
                                 </div>
+                                <div class="col-md-6 field-Foreign_FirstName">
+                                    <div class="form-group"> 
+                                        <label >{{__("Гадаад паспортын нэр /Англиар/")}} </label>
+                                        <input type="text" value="{{old('Foreign_FirstName',$row->Foreign_FirstName)}}" placeholder="{{ __('Гадаад паспортын нэр 2')}}" name="Foreign_FirstName" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 field-Foreign_LastName">
+                                    <div class="form-group"> 
+                                        <label >{{__("Гадаад паспортын овог /Англиар/")}} </label>
+                                        <input type="text" value="{{old('Foreign_LastName',$row->Foreign_LastName)}}" placeholder="{{ __('Гадаад паспортын овог 2')}}" name="Foreign_LastName" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 field-Foreign_Registration">
+                                    <div class="form-group"> 
+                                        <label >{{__("Гадаад паспортын дугаар")}} <span class="required">*</span></label>
+                                        <input type="text" value="{{old('Foreign_Registration',$row->Foreign_Registration)}}" placeholder="{{ __('Гадаад паспортын дугаар')}}" name="Foreign_Registration" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 field-travel-destination">
+                                    <div class="form-group">
+                                        <label >{{__("Регистрийн дугаар")}} <span class="required">*</span> </label>
+                                        <input type="text" value="{{old('Registration',$row->Registration)}}" placeholder="{{ __('Паспортын дугаар')}}" name="Registration" class="form-control">
+                                    </div>
+                                </div>
+        
+                                <div class="col-md-6 field-travel-country">
+                                    <div class="form-group">
+                                        <label >{{__("Гадаад паспорт олгосон өдөр")}} <span class="required">*</span> </label>
+                                        <input type="text" value="{{old('Foreign_Start_Date',$row->Foreign_Start_Date)}}" placeholder="{{ __('Гадаад паспорт олгосон өдөр')}}" name="Foreign_Start_Date" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 field-travel-destination">
+                                    <div class="form-group">
+                                        <label >{{__("Гадаад паспортын дуусах хугацаа")}} <span class="required">*</span> </label>
+                                        <input type="text" value="{{old('Foreign_End_Date',$row->Foreign_End_Date)}}" placeholder="{{ __('Гадаад паспортын дуусах хугацаа')}}" name="Foreign_End_Date" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 field-travel-destination">
+                                    <div class="form-group">
+                                        <label >{{__("Иргэний үнэмлэхний зураг")}} <span class="required">*</span> </label>
+                                        {!! \Modules\Media\Helpers\FileHelper::fieldGalleryUpload('Registration_image',old('Registration_image',$row->Registration_image)) !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-12 field-travel-destination">
+                                    <div class="form-group">
+                                        <label >{{__("Гадаад паспортын зураг")}} <span class="required">*</span> </label>
+                                        {!! \Modules\Media\Helpers\FileHelper::fieldGalleryUpload('Foreign_Registration_image',old('Foreign_Registration_image',$row->Foreign_Registration_image)) !!}
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
