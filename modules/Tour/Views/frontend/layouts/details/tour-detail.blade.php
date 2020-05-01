@@ -121,13 +121,24 @@
                 <span class="arrow"><i class="fa fa-angle-down"></i></span>
             </div>
             <div class="body">
-                <div class="card bg-light mb-3">
+                {{-- <div class="card bg-light mb-3">
                     <div class="card-header">
                         {{$item['description']}}
                     </div>
                 <div class="card-text">
                 <button class="btn btn-primary">{{$item['hotel']}}</button><div class="btn btn-outline-success" style="float: right">{{$item['food']}}</div>
                 </div>
+                </div> --}}
+                <div class="container-fluid">
+                    {{$item['description']}}
+                </div><br>
+                <div class="row" style="border:1px double #7A6966">
+                    <div class="col-md-6">
+                        Зочид буудал: <b>{{$item['hotel']}}</b>
+                    </div>
+                    <div class="col-md-6" style="text-align: right">
+                        Хоол: <b>{{$item['food']}}</b>
+                    </div>
                 </div>
             </div>
         </div>
